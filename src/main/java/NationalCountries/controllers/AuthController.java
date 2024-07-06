@@ -35,6 +35,7 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthDto);
     }
 
+    @CrossOrigin()
     @PostMapping(value = {"/register"})
     public ResponseEntity<String> register(@RequestBody UserDto userDto) throws RegistrationException {
         try {
