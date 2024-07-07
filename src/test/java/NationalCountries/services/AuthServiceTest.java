@@ -15,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +48,7 @@ class AuthServiceTest {
 
     @Test
     void registerUser_UserAlreadyExists_ThrowsException() {
-        UserDto userDto = new UserDto("existingUser", "password");
+        UserDto userDto = new UserDto("existingUser", "password", false, null);
         when(userRepository.existsByUsername(anyString())).thenReturn(true);
 
         RegistrationException exception = assertThrows(RegistrationException.class, () -> {
@@ -59,7 +61,7 @@ class AuthServiceTest {
 
     @Test
     void registerUser_UserDoesNotExist_Success() {
-        UserDto userDto = new UserDto("newUser", "password");
+        UserDto userDto = new UserDto("newUser", "password", false, LocalDateTime.now());
         when(userRepository.existsByUsername(anyString())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 
@@ -71,16 +73,16 @@ class AuthServiceTest {
 
     @Test
     void login_ValidUser_ReturnsToken() {
-        UserDto userDto = new UserDto("validUser", "password");
+        UserDto userDto = new UserDto("validUser", "password", true, LocalDateTime.now());
         User enabledUser = new User();
         enabledUser.setEnabled(true);
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(enabledUser));
         when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
         when(jwtTokenProviderService.generateToken(any())).thenReturn("jwtToken");
 
-        String token = authService.login(userDto);
+        Map<String, String> response = authService.login(userDto);
 
-        assertEquals("jwtToken", token);
+        assertEquals("jwtToken", response.get("token"));
         verify(authenticationManager, times(1)).authenticate(any());
         verify(jwtTokenProviderService, times(1)).generateToken(any());
     }

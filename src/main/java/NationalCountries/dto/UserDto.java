@@ -1,18 +1,18 @@
 package NationalCountries.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserDto {
 
     private String username;
     private String password;
-
-    public UserDto(String username, String password) {
-        super();
-        this.username = username;
-        this.password = password;
-    }
+    private boolean isEnabled;
+    private LocalDateTime dateTime;
 }

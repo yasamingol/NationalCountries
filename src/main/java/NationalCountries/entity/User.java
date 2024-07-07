@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,8 @@ public class User {
     private String password;
     @Column(nullable = false)
     private boolean isEnabled;
+    @Column(nullable = false)
+    private LocalDateTime dateTime;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
@@ -40,6 +43,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isEnabled = false;
+        this.dateTime = LocalDateTime.now();
     }
 
 }

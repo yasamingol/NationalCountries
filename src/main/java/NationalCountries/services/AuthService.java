@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class AuthService {
                     user.setPassword(passwordEncoder.encode(password));
                     user.setEnabled(true);
                     user.setRoles(Collections.singleton(adminRole));
+                    user.setDateTime(LocalDateTime.now());
                     userRepository.save(user);
                     return user;
                 });

@@ -49,7 +49,8 @@ public class AppUserDetailsService implements UserDetailsService {
 
     public List<List<Object>> getAllUsers(int pageNumber, int pageSize) {
         List<Object> users = new ArrayList<>(userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getUsername(), user.getPassword()))
+                .map(user -> new UserDto(user.getUsername(), user.getPassword(),
+                        user.isEnabled(), user.getDateTime()))
                 .collect(Collectors.toList()));
         return paginationService.paginate(users, pageNumber, pageSize);
     }

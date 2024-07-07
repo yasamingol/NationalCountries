@@ -30,7 +30,6 @@ public class AuthController {
     @CrossOrigin()
     @PostMapping(value = {"/login"})
     public ResponseEntity<JwtAuthDto> login(@RequestBody UserDto userDto) throws LoginException {
-//        String token = "";
         Map<String, String> response = new HashMap<>();
         try {
             response = authService.login(userDto);
