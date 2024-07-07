@@ -1,33 +1,50 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import reactLogo from '../assets/react.svg'
 import ncLogo from '/nc-logo.png'
+import cat from '/cat.gif'
 import '../App.css'
 
 function Home() {
-    const [count, setCount] = useState(0)
+    const navigate = useNavigate();
+
+    let audio = new Audio("/meow.mp3")
+
+    const meow = () => {
+      fetch(import.meta.env.VITE_SERVER_DOMAIN + 'users/meow', { 
+        method: 'GET', 
+      })
+      .then(response => {console.log(response)})
+      .catch((error) => { 
+          console.error('Error:', error); 
+      }); 
+      audio.play()
+    }
 
     return (
         <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={ncLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <title>National Countries</title>
+        <h1>National Countries</h1>
+          <img src={ncLogo} className="logo" alt="National logo" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <hr className="separator" />
+      {/* <div className="card"> */}
+        <button className="btn form-btn" onClick={() => navigate("/register")}>
+          Register
         </button>
+        <button className="btn form-btn" onClick={() => navigate("/login")}>
+          Login
+        </button>
+        <hr className="separator" />
+        <img src={cat} className="cat" alt="Cat" onClick={meow}/>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Don't touch the cat!
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <footer className="footer">
+        <p>&copy; 2024 Mehrad Milanloo - Yasamin Golzar</p>
+      </footer>
+      {/* </div> */}
     </>
     );
 }

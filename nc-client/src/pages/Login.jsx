@@ -54,9 +54,10 @@ function Login() {
               error: "Error occurred",
           })
         const role = response.data['role']
-        const token = response.data['token']
+        const token = response.data['jwtToken']
 
         localStorage.setItem("token", token);
+        console.log('My role is:', role)
             
         if (response.status === 200 && role === "[]") {
             toast.success("You have successfully logged in.");

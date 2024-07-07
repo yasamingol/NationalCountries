@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 const AdminDashboard = lazy(() => import("./pages/Admin"));
+const UserDashboard = lazy(() => import("./pages/User"));
 
 
 function App() {
@@ -20,33 +21,31 @@ function App() {
           <Route
             path="/"
             element={
-              <Protected>
                 <Home />
-              </Protected>
             }
           />
           <Route
             path="/login"
             element={
-              <Public>
                 <Login />
-              </Public>
             }
           />
           <Route
             path="/register"
             element={
-              <Public>
                 <Register />
-              </Public>
             }
           />
           <Route
             path="/admin-dashboard"
             element={
-              <Public>
                 <AdminDashboard />
-              </Public>
+            }
+          />
+          <Route
+            path="/user-dashboard"
+            element={
+                <UserDashboard />
             }
           />
         </Routes>
