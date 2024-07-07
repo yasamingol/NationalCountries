@@ -7,6 +7,8 @@ import { toast } from 'react-hot-toast';
 const AdminDashboard = () => { 
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]); 
+  const [currentPage, setCurrentPage] = useState(1);  
+  const [tokensPerPage, setTokensPerPage] = useState(3);  
   const navigate = useNavigate(); 
  
   const handleLogout = async () => { 
@@ -15,8 +17,11 @@ const AdminDashboard = () => {
     navigate('/login/'); 
   }; 
  
-  const fetchUsers = () => { 
-    fetchWithAuth(import.meta.env.VITE_SERVER_DOMAIN + 'admin/users', { 
+  const fetchUsers = (pageNumber, pageSize) => { 
+    fetchWithAuth(import.meta.env.VITE_SERVER_DOMAIN + 'admin/users?' + new URLSearchParams ({
+      pageNumber: pageNumber-1,
+      pageSize: pageSize
+    }).toString(), { 
       method: 'GET', 
     }) 
       .then(response => response.json()) 
@@ -39,7 +44,7 @@ const AdminDashboard = () => {
       .then(response => response) 
       .then(data => { 
         console.log('User status updated:', data); 
-        fetchUsers(); 
+        fetchUsers(currentPage, tokensPerPage); 
       }) 
       .catch((error) => { 
         console.error('Error:', error); 
@@ -47,8 +52,8 @@ const AdminDashboard = () => {
   }; 
  
   useEffect(() => { 
-    fetchUsers(); 
-  }, []); 
+    fetchUsers(currentPage, tokensPerPage); 
+  }, [currentPage, tokensPerPage]); 
  
   return ( 
     <div className="dashboard-container"> 
@@ -67,8 +72,7 @@ const AdminDashboard = () => {
           <hr className="separator" /> 
           <div className="map-section"> 
             <div className="children-container"> 
-              {pages.map((page, index) => (
-                page.map((user, index) => ( 
+              {pages.map((user, index) => (
                   <div className="child-card" key={index}> 
                     <div className="toggle-button"> 
                       <label className="switch"> 
@@ -86,9 +90,29 @@ const AdminDashboard = () => {
                     <p>{user.dateTime.slice(0, 10)}</p> 
                     <p>{user.dateTime.slice(11, 19)}</p> 
                   </div> 
-              ))))} 
+              ))} 
             </div> 
-          </div> 
+          </div>
+          <div className="pagination-controls"> 
+              <label> 
+                  Page Number: 
+                  <input  
+                      type="number"  
+                      value={currentPage}  
+                      onChange={(e) => setCurrentPage(Number(e.target.value))}  
+                      min="1" 
+                  /> 
+              </label> 
+              <label> 
+                  Tokens Per Page: 
+                  <input  
+                      type="number"  
+                      value={tokensPerPage}  
+                      onChange={(e) => setTokensPerPage(Number(e.target.value))}  
+                      min="1" 
+                  />
+              </label> 
+          </div>  
         </div> 
       </div> 
     </div> 

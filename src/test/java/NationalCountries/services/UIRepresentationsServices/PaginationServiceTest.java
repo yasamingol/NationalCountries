@@ -17,12 +17,11 @@ class PaginationServiceTest {
         for (int i = 1; i <= 50; i++) {
             inputList.add(i);
         }
-
-        List<List<Object>> paginatedList = paginationService.paginate(inputList, 5, 10);
+        List<Object> paginatedList = paginationService.paginate(inputList, 5, 10);
 
         assertEquals(5, paginatedList.size());
         for (int i = 0; i < 5; i++) {
-            assertEquals(10, paginatedList.get(i).size());
+            assertEquals(10, paginatedList.size();
         }
     }
 
@@ -33,13 +32,13 @@ class PaginationServiceTest {
             inputList.add(i);
         }
 
-        List<List<Object>> paginatedList = paginationService.paginate(inputList, 10, 5);
+        List<Object> paginatedList = paginationService.paginate(inputList, 10, 5);
 
         assertEquals(10, paginatedList.size());
         for (int i = 0; i < 9; i++) {
-            assertEquals(5, paginatedList.get(i).size());
+            assertEquals(5, paginatedList.size());
         }
-        assertEquals(2, paginatedList.get(9).size());
+        assertEquals(2, paginatedList.size());
     }
 
     @Test
@@ -49,14 +48,14 @@ class PaginationServiceTest {
             inputList.add(i);
         }
 
-        List<List<Object>> paginatedList = paginationService.paginate(inputList, 11, 5);
+        List<Object> paginatedList = paginationService.paginate(inputList, 11, 5);
 
         assertEquals(11, paginatedList.size());
         for (int i = 0; i < 10; i++) {
-            assertEquals(5, paginatedList.get(i).size());
+            assertEquals(5, paginatedList.size());
         }
         for (int i = 10; i < 11; i++) {
-            assertTrue(paginatedList.get(i).isEmpty());
+            assertTrue(paginatedList.isEmpty());
         }
     }
 }

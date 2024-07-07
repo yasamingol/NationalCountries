@@ -22,7 +22,7 @@ public class CountriesService {
     private PaginationService paginationService;
 
     @Cacheable(value = "countries")
-    public List<List<Object>> findAllCountries(int pageNumber, int pageSize) {
+    public List<Object> findAllCountries(int pageNumber, int pageSize) {
         ExternalCountries response = externalCountriesService.fetchCountries();
         if (response != null && response.getCountries() != null) {
             List<Object> countries = new ArrayList<>(response.getCountries());

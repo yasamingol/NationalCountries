@@ -47,11 +47,12 @@ public class AppUserDetailsService implements UserDetailsService {
                 authorities);
     }
 
-    public List<List<Object>> getAllUsers(int pageNumber, int pageSize) {
+    public List<Object> getAllUsers(int pageNumber, int pageSize) {
         List<Object> users = new ArrayList<>(userRepository.findAll().stream()
                 .map(user -> new UserDto(user.getUsername(), user.getPassword(),
                         user.isEnabled(), user.getDateTime()))
                 .collect(Collectors.toList()));
+        System.out.println(users);
         return paginationService.paginate(users, pageNumber, pageSize);
     }
 }

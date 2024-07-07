@@ -26,7 +26,7 @@ public class CountriesController {
     @GetMapping("")
     public Map<String, Object> listAllCountries(@RequestParam(defaultValue = "1") int pageNumber,
                                                 @RequestParam(defaultValue = "100") int pageSize) {
-        List<List<Object>> countries = countriesService.findAllCountries(pageNumber, pageSize);
+        List<Object> countries = countriesService.findAllCountries(pageNumber, pageSize);
         Map<String, Object> response = new HashMap<>();
         response.put("countries", countries);
         response.put("page", pageNumber);

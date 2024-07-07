@@ -19,16 +19,18 @@ public class AdminController {
     private AdminService adminService;
     private AppUserDetailsService userDetailsService;
 
+    @CrossOrigin
     @GetMapping(value = "/users")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Map<String, Object>> listAllUsers(@RequestParam(defaultValue = "1") int pageNumber,
                                                             @RequestParam(defaultValue = "100") int pageSize) {
-        List<List<Object>> users = userDetailsService.getAllUsers(pageNumber, pageSize);
+        List<Object> users = userDetailsService.getAllUsers(pageNumber, pageSize);
         Map<String, Object> response = new HashMap<>();
         response.put("users", users);
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin
     @PutMapping(value = "/users")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> updateUserActivation(@RequestParam String username, @RequestParam boolean active) {

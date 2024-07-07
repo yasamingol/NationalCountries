@@ -118,3 +118,25 @@ input:checked + .slider {    background-color: #007bff;
 }
 input:checked + .slider:before {    transform: translateX(26px);
 }
+.pagination {    display: flex;
+  justify-content: center;    margin-top: 20px;
+}
+.pagination button {
+  background-color: #007bff;    color: white;
+  border: none;    padding: 10px 15px;
+  margin: 0 5px;    cursor: pointer;
+  border-radius: 4px;}
+.pagination button:hover {
+  background-color: #0056b3;}
+.pagination button:disabled {
+  background-color: #ccc;    cursor: not-allowed;
+}
+.pagination-controls {    display: flex;
+  justify-content: space-between;    margin-bottom: 20px;
+}
+.pagination-controls label {    font-size: 1rem;
+  color: #666;}
+.pagination-controls input {
+  width: 60px;    padding: 5px;
+  margin-left: 10px;    border: 1px solid #ccc;
+  border-radius: 4px;}
