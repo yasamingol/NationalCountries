@@ -8,7 +8,7 @@ import { getCookie } from "../lib/csrf";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 function Register() {
-  const [empty, setEmpty] = useState(false);
+  const [nempty, setEmpty] = useState(false);
   const [formDetails, setFormDetails] = useState({
     username: "",
     password: "",
@@ -26,7 +26,7 @@ function Register() {
 
   const formSubmit = async (e) => {
     e.preventDefault();
-    if (empty) return;
+    if (nempty) return;
 
     const {username, password} = formDetails;
     
@@ -99,7 +99,7 @@ function Register() {
                 <button
                   type="submit"
                   className="btn form-btn"
-                  disabled={empty}
+                  disabled={nempty}
                 >
                   Submit
                 </button>

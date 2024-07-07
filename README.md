@@ -82,7 +82,13 @@ docker run -d -p 6379:6379 redis
 docker run -d -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 ```
 
-4. **Run Spring Boot Project**: Use the following command to run the Spring Boot application:
+4. **Initial MySQL**: Run the following command to start the `MySQL` server:
+
+```bash
+docker run -d -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=national-countries-db --name mysqldb -p 3307:3306 mysql:8.0
+```
+
+5. **Run Spring Boot Project**: Use the following command to run the Spring Boot application:
 
 ```bash
 mvn spring-boot:run
@@ -124,7 +130,7 @@ The project provides the following `REST API` endpoints:
 
         + `password`: The password of the user.
 
-    + **Response**: A `JWToken` for the user.
+    + **Response**: A `JWToken` for the user and The user's role.
 
 ### Country APIs
 

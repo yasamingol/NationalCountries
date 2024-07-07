@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/users")
@@ -18,20 +21,23 @@ public class AuthController {
 
     private AuthService authService;
 
+    @CrossOrigin()
     @GetMapping(value = {"/meow"})
     public ResponseEntity<String> meower() {
         return ResponseEntity.ok("Meow");
     }
 
+    @CrossOrigin()
     @PostMapping(value = {"/login"})
     public ResponseEntity<JwtAuthDto> login(@RequestBody UserDto userDto) throws LoginException {
-        String token = "";
+//        String token = "";
+        Map<String, String> response = new HashMap<>();
         try {
-            token = authService.login(userDto);
+            response = authService.login(userDto);
         } catch (Exception e) {
             throw new LoginException("Error while processing login: " + e.getMessage(), e);
         }
-        JwtAuthDto jwtAuthDto = new JwtAuthDto(token);
+        JwtAuthDto jwtAuthDto = new JwtAuthDto(response.get("token"), response.get("role"));
         return ResponseEntity.ok(jwtAuthDto);
     }
 

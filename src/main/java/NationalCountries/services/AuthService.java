@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
@@ -59,14 +61,19 @@ public class AuthService {
     }
 
 
-    public String login(UserDto userDto) {
+    public Map<String, String> login(UserDto userDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwtToken = jwtTokenProviderService.generateToken(authentication);
+        Map<String, String> response = new HashMap<>();
 
-        return jwtToken;
+        String jwtToken = jwtTokenProviderService.generateToken(authentication);
+        response.put("token", jwtToken);
+        response.put("role", authentication.getAuthorities().toString());
+
+
+        return response;
     }
 }

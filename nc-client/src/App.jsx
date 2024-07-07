@@ -7,6 +7,8 @@ import Loading from "./components/Loading";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+const AdminDashboard = lazy(() => import("./pages/Admin"));
+
 
 function App() {
 
@@ -36,6 +38,14 @@ function App() {
             element={
               <Public>
                 <Register />
+              </Public>
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <Public>
+                <AdminDashboard />
               </Public>
             }
           />
